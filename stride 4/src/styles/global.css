@@ -1,0 +1,1319 @@
+/* =========================================================
+   Stride — tokens
+   A running instrument: near-black, warm white, one signature green.
+   --good  (neon green)  best performance, improvement, the recommendation
+   --warn  (orange)      decline, attention, rest opportunities
+   Nothing else gets color.
+   ========================================================= */
+:root {
+  color-scheme: dark;
+
+  --bg: #0a0a09;
+  --surface: #131312;
+  --surface-2: #1b1a18;
+  --line: rgba(244, 240, 232, 0.07);
+  --line-strong: rgba(244, 240, 232, 0.14);
+
+  --text: #f4f0e8;
+  --text-2: #b1aba1;
+  --text-3: #7c776f;
+
+  --good: #c6ff3a;
+  --good-ink: #0d1200;
+  --good-soft: rgba(198, 255, 58, 0.1);
+  --good-glow: rgba(198, 255, 58, 0.45);
+  --warn: #ff9a3c;
+  --warn-soft: rgba(255, 154, 60, 0.12);
+  --warn-glow: rgba(255, 154, 60, 0.45);
+
+  --focus: #f4f0e8;
+  --font: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  font-feature-settings: 'cv11', 'ss01';
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.has-dialog {
+  overflow: hidden;
+}
+
+h1, h2, h3, p, dl, dd, ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button, select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 600;
+  z-index: 60;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* ---------- shared atoms ---------- */
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* =========================================================
+   Layout — one column, tight rhythm
+   ========================================================= */
+.page {
+  position: relative; /* contains visually hidden content */
+  max-width: 920px;
+  margin: 0 auto;
+  padding-block: 40px 88px;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+  display: grid;
+  gap: 64px;
+}
+
+.page > * {
+  min-width: 0;
+}
+
+.section__title {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+.header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: rgba(10, 10, 9, 0.8);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header__inner {
+  max-width: 920px;
+  margin: 0 auto;
+  padding-block: 14px;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.brand__mark {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: var(--good);
+  box-shadow: 0 0 14px rgba(198, 255, 58, 0.35);
+  clip-path: polygon(0 100%, 35% 30%, 60% 65%, 100% 0, 100% 100%);
+}
+
+.range {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-2);
+}
+
+.range select {
+  appearance: none;
+  height: 34px;
+  padding: 0 32px 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.range select:hover {
+  border-color: rgba(244, 240, 232, 0.28);
+}
+
+.range select:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.range option {
+  background: var(--surface);
+}
+
+.range__chevron {
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+}
+
+/* =========================================================
+   1. How am I doing? — headline, insight, readout as one block
+   ========================================================= */
+.hero__eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.hero__title {
+  margin-top: 14px;
+  max-width: 18ch;
+  font-size: 54px;
+  line-height: 1.03;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.hero__insight {
+  margin-top: 18px;
+  max-width: 54ch;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.readout {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: end;
+}
+
+.readout__item dt {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.readout__item dd {
+  margin-top: 8px;
+  font-size: 40px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.readout__item.is-primary dd {
+  font-size: 76px;
+  font-weight: 650;
+  letter-spacing: -0.05em;
+}
+
+.readout__item dd.is-warn {
+  color: var(--warn);
+}
+
+.readout__item dd.is-good {
+  color: var(--good);
+}
+
+.readout__unit {
+  margin-left: 6px;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-3);
+}
+
+.readout__item.is-primary .readout__unit {
+  font-size: 20px;
+}
+
+.readout__sub {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--text-3);
+}
+
+.readout__sub.is-warn {
+  color: var(--warn);
+}
+
+/* =========================================================
+   The one visualization: pace by week
+   ========================================================= */
+.trend {
+  position: relative;
+  margin-top: -8px;
+}
+
+.trend__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.trend__hint {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.trend__plot {
+  position: relative;
+}
+
+.trend__plot svg {
+  display: block;
+  overflow: visible;
+}
+
+.trend__marker {
+  stroke: rgba(244, 240, 232, 0.05);
+  stroke-dasharray: 2 5;
+}
+
+.trend__marker.is-active {
+  stroke: rgba(244, 240, 232, 0.28);
+}
+
+.trend__line {
+  fill: none;
+  stroke-width: 3.25;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.1s var(--ease) 0.15s forwards;
+}
+
+.trend__glow {
+  fill: none;
+  stroke-width: 9;
+  opacity: 0.32;
+}
+
+.trend__pt {
+  fill: var(--bg);
+  stroke: var(--text-2);
+  stroke-width: 2;
+  transition: r 0.15s var(--ease);
+}
+
+.halo.is-good { fill: var(--good-soft); }
+.halo.is-warn { fill: var(--warn-soft); }
+.halo.is-flat { fill: rgba(244, 240, 232, 0.08); }
+
+.trend__key {
+  fill: var(--bg);
+  stroke-width: 3.5;
+}
+
+.trend__key.is-good { stroke: var(--good); filter: drop-shadow(0 0 6px var(--good-glow)); }
+.trend__key.is-warn { stroke: var(--warn); filter: drop-shadow(0 0 6px var(--warn-glow)); }
+.trend__key.is-flat { stroke: var(--text); }
+
+.trend__label {
+  font-size: 14px;
+  font-weight: 650;
+  fill: var(--text);
+  paint-order: stroke;
+  stroke: var(--bg);
+  stroke-width: 5px;
+}
+
+.trend__label.is-good { fill: var(--good); }
+.trend__label.is-warn { fill: var(--warn); }
+
+.trend__x {
+  font-size: 12px;
+  font-weight: 500;
+  fill: var(--text-3);
+}
+
+.trend__x.is-good { fill: var(--good); }
+.trend__x.is-active { fill: var(--text); }
+
+.trend__tip {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(29, 28, 26, 0.94);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  pointer-events: none;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.trend__tip-wk { color: var(--text-3); font-weight: 600; }
+.trend__tip-pace { font-size: 15px; font-weight: 650; }
+.trend__tip-pace small { font-size: 11px; color: var(--text-3); font-weight: 400; margin-left: 2px; }
+.trend__tip-mi { color: var(--text-2); }
+
+/* =========================================================
+   2. What changed? — typographic rows, cause → effect
+   ========================================================= */
+.rows {
+  margin-top: 18px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 8px 24px;
+  padding-block: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.row__label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.row__values {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+
+.row__from {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-3);
+}
+
+.row__arrow {
+  color: var(--text-3);
+}
+
+.row__to {
+  font-size: 30px;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.row__to.is-warn { color: var(--warn); }
+
+.row__unit {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.row__change {
+  display: grid;
+  justify-items: end;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
+}
+
+.row__change.is-warn {
+  color: var(--warn);
+}
+
+.row__note {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+
+.changed__summary {
+  margin-top: 20px;
+  max-width: 60ch;
+  font-size: 15px;
+  color: var(--text-2);
+}
+
+.text-link {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.text-link:hover {
+  color: var(--text);
+}
+
+.text-link.is-inline {
+  padding: 0;
+  font-size: inherit;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--line-strong);
+}
+
+.text-link.is-inline:hover {
+  text-decoration-color: currentColor;
+}
+
+/* =========================================================
+   3. What should I do next? — the page's one surface
+   ========================================================= */
+.next {
+  padding: 32px 34px 28px;
+  border-radius: 24px;
+  background:
+    radial-gradient(60% 120% at 0% 0%, rgba(198, 255, 58, 0.08), transparent 60%),
+    var(--surface);
+}
+
+.next__title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.next__mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--good);
+  box-shadow: 0 0 14px var(--good-glow);
+}
+
+.next__lead {
+  margin-top: 12px;
+  max-width: 56ch;
+  font-size: 17px;
+  color: var(--text);
+}
+
+.next__targets {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.next__targets li {
+  padding-right: 24px;
+}
+
+.next__targets li + li {
+  padding-left: 24px;
+  border-left: 1px solid var(--line);
+}
+
+.next__value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  color: var(--good);
+}
+
+.next__unit {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0;
+  opacity: 0.75;
+}
+
+.next__label {
+  margin-top: 8px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.next__now {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.next__basis {
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* =========================================================
+   Recent runs
+   ========================================================= */
+.runs__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.runs__list {
+  margin-top: 14px;
+}
+
+.runs__list li + li {
+  border-top: 1px solid var(--line);
+}
+
+.run {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 0.7fr) minmax(0, 0.8fr) 20px;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 12px;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  text-align: left;
+  font-size: 15px;
+  transition: background 0.15s var(--ease);
+}
+
+.run:hover,
+.run.is-selected {
+  background: var(--surface);
+}
+
+.run:focus-visible {
+  outline-offset: -2px;
+}
+
+.run__date {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+}
+
+.run__flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--warn);
+}
+
+.run__flag::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warn);
+}
+
+.run__type {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-2);
+}
+
+.run__num {
+  text-align: right;
+  color: var(--text-2);
+  transition: color 0.15s var(--ease);
+}
+
+.run__num.is-pace {
+  font-weight: 500;
+}
+
+.run:hover .run__num.is-pace,
+.run:focus-visible .run__num.is-pace {
+  color: var(--text);
+  font-weight: 650;
+}
+
+.run__chev {
+  color: var(--text-3);
+  opacity: 0.4;
+  transition: opacity 0.15s var(--ease), transform 0.2s var(--ease);
+}
+
+.run:hover .run__chev,
+.run:focus-visible .run__chev {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+/* ---------- Run-type marks: shape carries meaning, color stays neutral ---------- */
+.type-mark {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  background: var(--text-2);
+}
+
+.type-mark.is-fun { border-radius: 50%; }
+.type-mark.is-tempo { border-radius: 1.5px; transform: rotate(45deg) scale(0.85); }
+.type-mark.is-long { width: 16px; height: 7px; border-radius: 4px; background: var(--text); }
+
+.type-mark.is-sm { width: 8px; height: 8px; }
+.type-mark.is-sm.is-long { width: 14px; height: 6px; }
+
+.type-mark.is-lg { width: 22px; height: 22px; background: transparent; box-shadow: inset 0 0 0 2px var(--text-3); }
+.type-mark.is-lg.is-long { width: 34px; height: 14px; border-radius: 7px; }
+
+.type-glyph.is-fun,
+.type-glyph.is-tempo { fill: var(--text-2); }
+.type-glyph.is-long { fill: var(--text); }
+
+/* =========================================================
+   Dialog layers: run drawer and training-pattern sheet
+   ========================================================= */
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.layer.is-drawer {
+  z-index: 50;
+}
+
+.layer__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(4px);
+  animation: fade-in 0.2s var(--ease);
+}
+
+.close {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text-2);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.close:hover {
+  color: var(--text);
+}
+
+/* ---------- Drawer ---------- */
+.drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(420px, 100%);
+  overflow-y: auto;
+  padding: calc(26px + env(safe-area-inset-top, 0px)) max(30px, env(safe-area-inset-right, 0px)) 36px 30px;
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  animation: slide-in 0.3s var(--ease);
+}
+
+.drawer__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drawer__type {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.drawer__title {
+  margin-top: 24px;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.drawer__pace {
+  margin-top: 28px;
+  font-size: 68px;
+  line-height: 1;
+  font-weight: 650;
+  letter-spacing: -0.045em;
+}
+
+.drawer__pace span {
+  margin-left: 6px;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-3);
+}
+
+.drawer__meta {
+  margin-top: 12px;
+  font-size: 15px;
+  color: var(--text-2);
+}
+
+.drawer__read {
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.drawer__flag {
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--warn-soft);
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.drawer__flag strong {
+  color: var(--warn);
+  font-weight: 650;
+}
+
+/* ---------- Sheet ---------- */
+.sheet {
+  position: absolute;
+  inset: max(24px, env(safe-area-inset-top, 0px)) 24px auto;
+  max-height: calc(100% - 48px);
+  max-width: 1040px;
+  margin: 0 auto;
+  overflow-y: auto;
+  padding: 32px 40px 36px;
+  border-radius: 28px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  animation: rise-in 0.3s var(--ease);
+}
+
+.sheet__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.sheet__title {
+  font-size: 26px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.sheet__title:focus {
+  outline: none;
+}
+
+.sheet__title:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.sheet__controls {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---------- Run-type filter ---------- */
+.segmented {
+  display: inline-flex;
+  gap: 2px;
+  margin: 0;
+  padding: 3px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--bg);
+}
+
+.segmented__option {
+  position: relative;
+  display: block;
+}
+
+.segmented__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.segmented__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  pointer-events: none;
+  transition: background 0.18s var(--ease), color 0.18s var(--ease);
+}
+
+.segmented__option:hover .segmented__label {
+  color: var(--text);
+}
+
+.segmented__input:checked + .segmented__label {
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 650;
+}
+
+.segmented__input:checked + .segmented__label .type-mark {
+  background: var(--bg);
+}
+
+.segmented__input:focus-visible + .segmented__label {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- Training pattern: a training calendar, one row per week ---------- */
+.pattern {
+  position: relative;
+  margin-top: 24px;
+}
+
+.pattern__scroll {
+  position: relative; /* contains visually hidden text */
+  overflow-x: auto;
+}
+
+.cal {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: separate;
+  border-spacing: 6px 6px;
+  table-layout: fixed;
+}
+
+.cal__corner {
+  width: 104px;
+}
+
+.cal__day {
+  padding-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+  text-align: center;
+}
+
+.cal__week {
+  padding-right: 8px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.cal__week.is-best {
+  color: var(--good);
+}
+
+.cal__cell {
+  height: 40px;
+  padding: 0;
+}
+
+/* rest day: an empty slot, so gaps read instantly */
+.cal__rest {
+  display: block;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px dashed rgba(244, 240, 232, 0.07);
+}
+
+/* a run: shape + distance on a quiet tile */
+.pattern__run {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease), opacity 0.2s var(--ease);
+}
+
+.pattern__run.is-long {
+  background: #23221f;
+  color: var(--text);
+}
+
+.pattern__run:hover {
+  background: #2a2926;
+  color: var(--text);
+}
+
+.pattern__run:focus-visible {
+  outline-offset: 2px;
+}
+
+.pattern__run.is-selected {
+  border-color: var(--text);
+}
+
+.pattern__mi small {
+  margin-left: 2px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-3);
+}
+
+/* recovery opportunity: the same tile with a thin orange outline */
+.pattern__run.is-flag {
+  border-color: var(--warn);
+  background: rgba(255, 154, 60, 0.07);
+}
+
+.pattern__run.is-dim {
+  opacity: 0.25;
+}
+
+.pattern__run.is-dim.is-flag {
+  opacity: 0.4;
+}
+
+.pattern.is-filtered .pattern__run:not(.is-dim) {
+  color: var(--text);
+}
+
+.pattern.is-filtered .pattern__run:not(.is-dim) .type-mark {
+  background: var(--text);
+}
+
+.pattern__insight {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 20px;
+}
+
+.pattern__insight-text {
+  font-size: 15px;
+  color: var(--text);
+}
+
+.pattern__insight-sub {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.pattern__insight-sub strong {
+  color: var(--warn);
+  font-weight: 650;
+}
+
+.pattern__key {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.pattern__key li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pattern__key-flag {
+  width: 20px;
+  height: 13px;
+  border-radius: 4px;
+  border: 1px solid var(--warn);
+  background: rgba(255, 154, 60, 0.07);
+}
+
+/* ---------- Empty state: an expected data state, not an error ---------- */
+.empty {
+  margin-top: 18px;
+  padding: 36px 24px 40px;
+  border-radius: 20px;
+  background: radial-gradient(80% 100% at 50% 0%, rgba(244, 240, 232, 0.04), transparent 70%), var(--bg);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: rise-in 0.3s var(--ease);
+}
+
+/* faint outline of the empty weeks, so it still reads as the calendar */
+.empty__ghost {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  padding: 4px 4px 0;
+}
+
+.empty__ghost-col {
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  width: 52px;
+  padding: 12px 0 8px;
+  border-radius: 14px;
+  background: rgba(244, 240, 232, 0.025);
+}
+
+.empty__ghost-col span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-3);
+  opacity: 0.35;
+}
+
+.empty__ghost-col p {
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.empty__badge {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.empty__title {
+  margin-top: 22px;
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.empty__body {
+  margin-top: 8px;
+  max-width: 44ch;
+  font-size: 15px;
+  color: var(--text-2);
+}
+
+.empty__actions {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 18px;
+}
+
+.empty__actions .btn span {
+  margin-left: 8px;
+  display: inline-block;
+  transition: transform 0.2s var(--ease);
+}
+
+.empty__actions .btn:hover span {
+  transform: translateX(3px);
+}
+
+/* the calendar settles in when it (re)appears, e.g. after recovering from the empty state */
+.pattern {
+  animation: fade-in 0.35s var(--ease);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap; /* keep the arrow on the same line as the label */
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.btn:hover {
+  border-color: rgba(244, 240, 232, 0.3);
+}
+
+.btn.is-primary {
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 650;
+}
+
+/* =========================================================
+   Motion (restrained; off for reduced-motion)
+   ========================================================= */
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes slide-in {
+  from { transform: translateX(32px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+@keyframes rise-in {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .trend__line { stroke-dashoffset: 0; }
+}
+
+/* =========================================================
+   Narrow screens (desktop-first, still readable on a phone)
+   ========================================================= */
+@media (max-width: 760px) {
+  .page { gap: 48px; padding-block: 28px 64px; }
+  .hero__title { font-size: 38px; }
+  .hero__insight { font-size: 16px; }
+  .readout { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .readout__item.is-primary { grid-column: 1 / -1; }
+  .readout__item.is-primary dd { font-size: 60px; }
+  .readout__item dd { font-size: 32px; }
+  .row { grid-template-columns: 1fr; }
+  .row__change { justify-items: start; text-align: left; }
+  .next { padding: 24px 20px; }
+  .next__targets { grid-template-columns: 1fr; gap: 18px; }
+  .next__targets li, .next__targets li + li { padding: 0; border: 0; }
+  .next__value { font-size: 40px; }
+  .run { grid-template-columns: minmax(0, 1fr) auto auto 14px; }
+  .run__type { display: none; }
+  .sheet { inset: 12px 12px auto; max-height: calc(100% - 24px); padding: 24px 18px; }
+}
